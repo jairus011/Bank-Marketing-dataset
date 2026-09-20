@@ -1,117 +1,71 @@
-# Client Term Deposit Subscription Analysis
+# Bank Marketing — Term Deposit Subscription Analysis
 
-## **Project Overview**
-This repository contains the analysis of client subscription behavior for term deposits. Using a dataset with demographic, financial, and campaign-related features, we aim to uncover insights that can optimize marketing strategies and enhance client engagement. This documentation includes **Milestone 1** (EDA and preprocessing) and **Milestone 2** (feature transformation and model training).
+A machine-learning and exploratory-analysis project examining which client and campaign characteristics are associated with **term-deposit subscription**.
 
----
+## Project objective
 
-## **Milestones**
+The work explores the bank-marketing problem from two angles:
 
-### **Milestone 1: Exploratory Data Analysis and Preprocessing**
+1. understand client/campaign patterns through exploratory analysis, and
+2. prepare and compare classification approaches for predicting subscription.
 
-#### **1. Data Understanding**
-The dataset contains information about clients, including their demographics, past interactions, financial status, and marketing outcomes. The target variable (`y`) indicates whether a client subscribed to a term deposit.
+## Repository contents
 
-| Feature Name       | Description                                                                                   | Type            |
-|--------------------|-----------------------------------------------------------------------------------------------|-----------------|
-| `age`              | Age of the client                                                                            | Integer         |
-| `job`              | Type of job (e.g., admin., blue-collar)                                                       | Categorical     |
-| `marital`          | Marital status of the client (e.g., single, married)                                          | Categorical     |
-| `education`        | Level of education (e.g., university.degree, basic.6y)                                        | Categorical     |
-| `default`          | Has credit in default?                                                                       | Binary          |
-| `balance`          | Average yearly balance in euros                                                              | Integer         |
-| `housing`          | Has housing loan?                                                                            | Binary          |
-| `loan`             | Has personal loan?                                                                           | Binary          |
-| `contact`          | Contact communication type (e.g., cellular, telephone)                                       | Categorical     |
-| `day_of_week`      | Last contact day of the week                                                                 | Date            |
-| `month`            | Last contact month of year                                                                   | Date            |
-| `duration`         | Duration of last contact (in seconds) - benchmark only; excluded from predictive modeling     | Integer         |
-| `campaign`         | Number of contacts during the current campaign                                               | Integer         |
-| `pdays`            | Days since last contact in previous campaign (-1 if not contacted before)                    | Integer         |
-| `previous`         | Number of contacts performed before this campaign                                            | Integer         |
-| `poutcome`         | Outcome of the previous campaign (e.g., success, failure)                                    | Categorical     |
-| `y`                | Target variable - client subscribed a term deposit                                           | Binary          |
+```text
+Bank-Marketing-dataset/
+├── Bank Marketing Dataset.ipynb
+├── Bank Marketing Dataset_Milestone_2.ipynb
+├── df_X.csv
+├── df_y.csv
+├── info.csv
+├── PROJECT_STATUS.md
+├── LICENSE
+└── README.md
+```
 
----
+The repository is currently notebook-based; it does not contain a production application or model-serving API.
 
-#### **2. Data Preprocessing**
-1. **Handling Missing Values**:
-   - `contact` and `poutcome`: Missing values replaced with `"unknown"`.
-   - `pdays`: Missing values imputed with `-1` to signify no previous contact.
+## Workflow covered
 
-2. **Encoding Categorical Variables**:
-   - **One-hot encoding** applied to `job`, `education`, `contact`, and `poutcome`.
-   - **Binary encoding** used for `housing` and `loan`.
+- dataset inspection
+- missing-value handling
+- categorical encoding
+- numerical scaling
+- exploratory data analysis
+- train/test preparation
+- classification modelling
 
-3. **Scaling Numerical Features**:
-   - Standardized features such as `age`, `balance`, `campaign`, and `pdays`.
+The existing milestone work references models such as Logistic Regression, Random Forest, and Gradient Boosting/XGBoost-style approaches. Metric values should be taken from the executed notebooks rather than invented in the README.
 
----
+## Important modelling note
 
-#### **3. Exploratory Data Analysis (EDA)**
-1. **Key Insights**:
-   - Higher subscription rates observed in students, retirees, and university-educated individuals.
-   - Cellular contact methods are most effective.
-   - Previous campaign success strongly predicts future subscription likelihood.
+Features such as call duration can create unrealistic predictive performance if they are only known after the marketing interaction has taken place. For a real pre-call decision model, such leakage-prone variables should be excluded or clearly separated from retrospective analysis.
 
-2. **Correlation Analysis**:
-   - Revealed strong correlations between certain features (`previous`, `poutcome_success`).
+## Tools
 
----
+Python · Pandas · Scikit-learn · Jupyter Notebook
 
-### **Milestone 2: Feature Transformation and Model Training**
+## Run
 
-#### **1. Feature Transformation**
-1. **Scaling**: Standardized numerical features using `StandardScaler`.
-2. **Encoding**: Applied one-hot encoding to categorical features.
+Open the notebooks in Jupyter/VS Code and keep `df_X.csv`, `df_y.csv`, and `info.csv` available in the repository root unless the notebook paths are later refactored.
 
-#### **2. Data Splitting**
-- Divided the dataset into training (80%) and testing (20%) sets.
+## Deployment
 
-#### **3. Model Training**
-Three machine learning models were trained:
-1. **Logistic Regression**:
-   - Baseline model to provide interpretable results.
-2. **Random Forest**:
-   - Ensemble model for robust performance and reduced overfitting.
-3. **Gradient Boosting (XGBoost)**:
-   - High-accuracy model suitable for structured datasets.
+No deployment is required for this version. The current deliverable is a notebook-based analysis/modelling project.
 
-#### **4. Hyperparameter Tuning (Optional)**
-- Performed grid search to optimize model parameters:
-   - Random Forest: Tuned `n_estimators`, `max_depth`, `min_samples_split`.
-   - XGBoost: Tuned `n_estimators`, `learning_rate`, `max_depth`.
+## API integration
 
----
+None.
 
-## **Results and Outputs**
-1. **Preprocessed Dataset**: Complete feature set ready for modeling.
-2. **Trained Models**: Logistic Regression, Random Forest, and XGBoost.
-3. **Best Hyperparameters** (optional):
-   - **Random Forest**: Optimal number of trees and depth.
-   - **XGBoost**: Ideal learning rate, depth, and number of estimators.
+## Portfolio role
 
----
+This is an earlier ML project. It is useful as evidence of progression, but it should remain unpinned while newer financial-risk and fraud projects lead the portfolio.
 
-## **Next Steps**
-The next milestone focuses on **model evaluation**, where we will assess the models’ performance using metrics such as accuracy, precision, recall, and F1-score. The best model will then be used for predictions.
+## Next improvements
 
----
-
-## **Files and Directories**
-- **`data/`**: Contains the dataset files (`df_X.csv`, `df_y.csv`, `info.csv`).
-- **`notebooks/`**: Includes separate notebooks for each milestone:
-   - `Bank Marketing Dataset_Milestone_1.ipynb`: Exploratory Data Analysis and Preprocessing.
-   - `Bank Marketing Dataset_Milestone_2.ipynb`: Feature Transformation and Model Training.
-- **`models/`**: Stores trained model artifacts (optional).
-- **`README.md`**: Comprehensive project documentation.
-
----
-
-## **Acknowledgments**
-Thank you for visiting this repository! Feel free to contribute or raise issues if you have suggestions or questions.
-
----
-
-## **License**
-This project is licensed under [MIT License](LICENSE).
+- consolidate the two milestone notebooks into one clean final notebook
+- verify and publish final evaluation metrics
+- document the exact source/schema of the dataset
+- turn preprocessing + modelling into a reproducible Scikit-learn Pipeline
+- add a compact requirements.txt
+- only build a prediction app if the final model/input contract is worth demonstrating
